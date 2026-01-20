@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hành trình xanh của rác thải - Dự án STEAM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+/* 1. THE SETUP - GIỮ NGUYÊN CSS CŨ */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0fdfa;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
+    margin: 0;
+    min-height: 100vh;
+    padding: 20px 0;
+    place-items: center;
+    font-family: 'Nunito', sans-serif;
+}
+
+.slide-container {
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    height: 720px;
+    justify-content: center;
+    overflow: hidden;
+    padding: 40px;
+    position: relative;
+    width: 1280px;
+}
+
+/* Background Decorations */
+.slide-container::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #ccfbf1 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.slide-container::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -80px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #e0f2fe 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.slide-container > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* 2. TYPOGRAPHY */
+.slide-container h1,
+.slide-container h2 {
+    font-family: 'Comfortaa', cursive;
+    color: #0f766e;
+}
+
+.slide-container h3 {
+    font-family: 'Comfortaa', cursive;
+    color: #0369a1;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.slide-container p,
+.slide-container li,
+.slide-container td,
+.slide-container th {
+    font-family: 'Nunito', sans-serif;
+    color: #334155;
+    font-size: 22px;
+    line-height: 1.6;
+}
+
+.slide-container .slide-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #0f766e;
+    margin-bottom: 30px;
+    width: 100%;
+    text-align: left;
+    border-bottom: 3px solid #2dd4bf;
+    padding-bottom: 15px;
+}
+
+/* 3. LAYOUTS */
+.content-area {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    width: 100%;
+}
+
+.title-layout {
+    text-align: center;
+    z-index: 2;
+}
+
+.title-layout h1 {
+    font-size: 80px;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #0f766e, #0284c7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.title-layout .subtitle {
+    font-size: 32px;
+    color: #64748b;
+    margin-top: 20px;
+}
+
+.title-layout .author {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f766e;
+    margin-top: 50px;
+    padding: 10px 30px;
+    background-color: #ccfbf1;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    width: 100%;
+    align-items: center;
+}
+
+.image-wrapper {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    height: 400px;
+    width: 100%;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rounded-image-layout .image-wrapper {
+    border-radius: 50%;
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    border: 8px solid #ccfbf1;
+}
+
+.slide-container.bleed-image-layout {
+    align-items: start;
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0;
+}
+
+.slide-container.bleed-image-layout > .content-container {
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.slide-container.bleed-image-layout > .image-container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.slide-container.bleed-image-layout img.bleed-image-side {
+    height: 720px;
+    max-height: 720px;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.two-column.tiled > div {
+    background-color: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 16px;
+    padding: 30px;
+    height: 100%;
+}
+
+.tiled-content {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    justify-content: center;
+}
+
+.tile {
+    flex: 1;
+    background-color: #f0fdfa;
+    border: 1px solid #99f6e4;
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tile .icon {
+    font-size: 50px;
+    color: #0f766e;
+    margin-bottom: 20px;
+    background-color: #ccfbf1;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.image-tile {
+    flex: 1;
+    text-align: center;
+}
+
+.image-tile .image-wrapper {
+    height: 250px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+}
+
+.table-layout table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #cbd5e1;
+}
+
+.table-layout th {
+    background-color: #0f766e;
+    color: white;
+    padding: 20px;
+    text-align: left;
+}
+
+.table-layout td {
+    background-color: #f8fafc;
+    padding: 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.quote-layout blockquote {
+    font-family: 'Comfortaa', cursive;
+    font-size: 36px;
+    color: #0f766e;
+    text-align: center;
+    position: relative;
+    padding: 40px;
+    background-color: #f0fdfa;
+    border-radius: 20px;
+    border-left: 10px solid #2dd4bf;
+}
+
+.quote-layout cite {
+    display: block;
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #0369a1;
+}
+
+.qa-layout {
+    text-align: center;
+}
+.qa-layout h2 {
+    font-size: 80px;
+    color: #0f766e;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+li {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    position: relative;
+}
+li::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    color: #10b981;
+}
+
+/* =========================================
+   GAME STYLES (NEW)
+   ========================================= */
+
+/* Common Game Styles */
+.game-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-instruction {
+    font-size: 24px;
+    color: #475569;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.success-message {
+    font-size: 32px;
+    font-weight: bold;
+    color: #10b981;
+    margin-top: 20px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    text-align: center;
+}
+
+/* GAME 1: BIN SORTING */
+.bins-container {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.bin {
+    width: 220px;
+    height: 280px;
+    border-radius: 15px 15px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20px;
+    position: relative;
+    border: 4px dashed transparent;
+    transition: all 0.3s;
+}
+
+.bin.drag-over {
+    transform: scale(1.05);
+    border-color: #0ea5e9;
+    background-color: rgba(255,255,255,0.5);
+}
+
+.bin-green {
+    background-color: #22c55e; /* Green */
+    box-shadow: 0 10px 0 #15803d;
+}
+
+.bin-yellow {
+    background-color: #eab308; /* Yellow */
+    box-shadow: 0 10px 0 #a16207;
+}
+
+.bin-label {
+    font-family: 'Comfortaa', cursive;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.bin-icon {
+    font-size: 60px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.trash-pile {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    background-color: #f1f5f9;
+    padding: 20px;
+    border-radius: 20px;
+    min-width: 600px;
+}
+
+.trash-item {
+    font-size: 50px;
+    cursor: grab;
+    transition: transform 0.2s;
+    user-select: none;
+    padding: 10px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trash-item:active {
+    cursor: grabbing;
+    transform: scale(1.1);
+}
+
+.trash-item.hidden {
+    display: none;
+}
+
+/* GAME 2: JOURNEY SORTING */
+.journey-track {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+    width: 100%;
+    justify-content: center;
+}
+
+.drop-slot {
+    width: 180px;
+    height: 220px;
+    border: 3px dashed #cbd5e1;
+    border-radius: 15px;
+    background-color: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.slot-number {
+    position: absolute;
+    top: -15px;
+    background-color: #0f766e;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.card-deck {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.journey-card {
+    width: 160px;
+    height: 200px;
+    background-color: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    user-select: none;
+}
+
+.journey-card img, .journey-card i {
+    font-size: 50px;
+    color: #0369a1;
+    margin-bottom: 15px;
+}
+
+.journey-card span {
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+    color: #334155;
+}
+
+.check-btn {
+    background-color: #0f766e;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-family: 'Comfortaa', cursive;
+    transition: background 0.3s;
+}
+
+.check-btn:hover {
+    background-color: #115e59;
+}
+
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title Slide -->
+<div class="slide-container" id="slide1">
+    <div class="title-layout">
+        <h1>Ứng dụng Công nghệ số & AI<br>trong STEAM</h1>
+        <p class="subtitle">Dự án: "Hành trình xanh của rác thải"</p>
+        <div class="author">
+            <i class="fa-solid fa-user-graduate"></i> Tác giả: Trịnh Thị Ngạn - Trường Mầm non Phạm Hồng Thái Phường Hoàng Quế tỉnh Quảng Ninh
+        </div>
+    </div>
+</div>
+
+<!-- Slide 2: Introduction (Scene 1) -->
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">1. Đặt Vấn Đề & Bối Cảnh</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Chuyển Đổi Số Trong Giáo Dục</h3>
+                <ul>
+                    <li>Giáo dục mầm non trong kỷ nguyên số không thể đứng ngoài cuộc.</li>
+                    <li>Sử dụng công cụ hiện đại: Canva, ChatGPT, D-ID để soạn giảng.</li>
+                    <li><strong>Mục tiêu:</strong> Biến AI & VR thành công cụ đắc lực, giúp trẻ tiếp cận tri thức chủ động.</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/8709106512846392066" style="object-fit: cover;" alt="Giáo viên mầm non đang sử dụng máy tính và phần mềm AI để soạn bài">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: The Environment (Scene 1 cont) -->
+<div class="slide-container bleed-image-layout" id="slide3">
+    <div class="content-container">
+        <h2 class="slide-title">Không Gian Lớp Học</h2>
+        <p>Lớp học được thiết kế theo hướng mở, lấy cảm hứng từ phương pháp <strong>Reggio Emilia</strong>.</p>
+        <p>Sử dụng tối đa các vật liệu tái chế, thân thiện với môi trường, khơi gợi sự tò mò và sáng tạo ngay từ cái nhìn đầu tiên.</p>
+        <p>Thay vì bài giảng truyền thống, không gian này là nơi trẻ tự do khám phá và trải nghiệm.</p>
+    </div>
+    <div class="image-container">
+        <img class="bleed-image-side" src="http://googleusercontent.com/image_collection/image_retrieval/15760364798516182258" alt="Lớp học mầm non hiện đại với nhiều vật liệu tái chế">
+    </div>
+</div>
+
+<!-- Slide 4: The Hook - AI Assistant (Scene 2) -->
+<div class="slide-container" id="slide4">
+    <h2 class="slide-title">2. Khơi Gợi Hứng Thú: Trợ Lý Ảo</h2>
+    <div class="content-area">
+        <div class="two-column rounded-image-layout">
+            <div class="image-wrapper">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/9289289487854811184" alt="Nhân vật hoạt hình 3D Hiệp sĩ Xanh dễ thương">
+            </div>
+            <div>
+                <h3>Nhân vật: Hiệp sĩ Xanh</h3>
+                <ul>
+                    <li><strong>Vai trò:</strong> Người dẫn dắt câu chuyện xuyên suốt.</li>
+                    <li><strong>Tương tác:</strong> Nhân vật AI (tạo bởi D-ID/HeyGen) trò chuyện trực tiếp với trẻ.</li>
+                    <li><strong>Tình huống:</strong> "Trái Đất đang bị ốm vì rác thải nhựa. Các bạn hãy giúp tớ cứu hành tinh nhé!"</li>
+                    <li><strong>Hiệu quả:</strong> Thu hút sự chú ý tuyệt đối của trẻ mẫu giáo.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: Digital Exploration (Scene 2b) -->
+<div class="slide-container" id="slide5">
+    <h2 class="slide-title">Khám Phá Số Qua Mã QR</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Học Tập Chủ Động</h3>
+                <ul>
+                    <li>Trẻ sử dụng máy tính bảng (iPad) để quét các mã QR dán trên mô hình rác thải.</li>
+                    <li>Mỗi mã QR mở ra một câu chuyện số hóa về vòng đời của rác thải.</li>
+                    <li>Biến việc tìm hiểu kiến thức thành một hành trình truy tìm kho báu thú vị.</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/6543255073514143575" style="object-fit: cover;" alt="Trẻ em mầm non đang dùng máy tính bảng quét mã QR trong lớp học">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: STEAM Activity - Science & Tech (Scene 3) -->
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">3. Hoạt động STEAM: S & T</h2>
+    <div class="content-area">
+        <div class="two-column tiled">
+            <div>
+                <h3><i class="fa-solid fa-flask" style="color: #0f766e;"></i> Science (Khoa học)</h3>
+                <p>Trẻ thực hành thả các vật liệu (chai nhựa, sỏi, vỏ hộp) vào nước.</p>
+                <p><strong>Khám phá:</strong> Nguyên lý vật chìm - vật nổi.</p>
+                <p>"Tại sao chai rỗng lại nổi? Vì bên trong có không khí!"</p>
+            </div>
+            <div>
+                <h3><i class="fa-solid fa-laptop-code" style="color: #0369a1;"></i> Technology (Công nghệ)</h3>
+                <p>Trẻ xem video hướng dẫn quy trình làm bè nổi trên máy tính bảng.</p>
+                <p>Sử dụng thiết bị thông minh để tra cứu thông tin và hình dung sản phẩm trước khi chế tạo.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: STEAM Activity - Visuals (Scene 3) -->
+<div class="slide-container" id="slide7">
+    <h2 class="slide-title">STEAM: Engineering, Art & Math</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="image-tile">
+                <div class="image-wrapper"><img src="http://googleusercontent.com/image_collection/image_retrieval/200733784824895710" alt="Trẻ em đang làm thí nghiệm vật nổi vật chìm"></div>
+                <p><strong>Engineering:</strong> Kết nối chai nhựa bằng dây thun và băng dính để tạo khối vững chắc.</p>
+            </div>
+            <div class="image-tile">
+                <div class="image-wrapper"><img src="http://googleusercontent.com/image_collection/image_retrieval/6555168962592451789" alt="Trẻ em đang lắp ráp bè từ chai nhựa"></div>
+                <p><strong>Art & Math:</strong> Trang trí cánh buồm (A) và đếm số lượng chai nhựa cần dùng (M).</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 8: Interactive Game 1 (REPLACED) -->
+<div class="slide-container" id="slide8">
+    <h2 class="slide-title">4. Trò chơi 1: Rác thuộc thùng nào?</h2>
+    <div class="game-container">
+        <p class="game-instruction">Kéo rác thải vào đúng thùng để giúp Hiệp sĩ Xanh nhé!</p>
+        
+        <div class="bins-container">
+            <!-- Green Bin (Organic) -->
+            <div class="bin bin-green" ondrop="drop(event, 'organic')" ondragover="allowDrop(event)">
+                <i class="fa-solid fa-apple-whole bin-icon"></i>
+                <div class="bin-label">Rác Hữu Cơ</div>
+            </div>
+            <!-- Yellow Bin (Recycle) -->
+            <div class="bin bin-yellow" ondrop="drop(event, 'recycle')" ondragover="allowDrop(event)">
+                <i class="fa-solid fa-recycle bin-icon"></i>
+                <div class="bin-label">Rác Tái Chế</div>
+            </div>
+        </div>
+
+        <div class="trash-pile">
+            <div class="trash-item" draggable="true" ondragstart="drag(event)" id="item1" data-type="organic">🍌</div>
+            <div class="trash-item" draggable="true" ondragstart="drag(event)" id="item2" data-type="recycle">🥤</div>
+            <div class="trash-item" draggable="true" ondragstart="drag(event)" id="item3" data-type="organic">🥬</div>
+            <div class="trash-item" draggable="true" ondragstart="drag(event)" id="item4" data-type="recycle">🥡</div>
+            <div class="trash-item" draggable="true" ondragstart="drag(event)" id="item5" data-type="recycle">📰</div>
+            <div class="trash-item" draggable="true" ondragstart="drag(event)" id="item6" data-type="organic">🍎</div>
+        </div>
+        
+        <div id="game1-msg" class="success-message">Xuất sắc! Bạn đã phân loại đúng hết rồi! 🎉</div>
+    </div>
+</div>
+
+<!-- Slide 9: Interactive Game 2 (NEW) -->
+<div class="slide-container" id="slide9">
+    <h2 class="slide-title">Trò chơi 2: Hành trình chai nhựa</h2>
+    <div class="game-container">
+        <p class="game-instruction">Sắp xếp các thẻ theo đúng thứ tự quy trình tái chế.</p>
+
+        <!-- Drop Slots -->
+        <div class="journey-track">
+            <div class="drop-slot" ondrop="dropCard(event)" ondragover="allowDrop(event)" id="slot1">
+                <div class="slot-number">1</div>
+            </div>
+            <div class="arrow"><i class="fa-solid fa-arrow-right" style="color:#cbd5e1; font-size:30px; margin-top:100px;"></i></div>
+            <div class="drop-slot" ondrop="dropCard(event)" ondragover="allowDrop(event)" id="slot2">
+                <div class="slot-number">2</div>
+            </div>
+            <div class="arrow"><i class="fa-solid fa-arrow-right" style="color:#cbd5e1; font-size:30px; margin-top:100px;"></i></div>
+            <div class="drop-slot" ondrop="dropCard(event)" ondragover="allowDrop(event)" id="slot3">
+                <div class="slot-number">3</div>
+            </div>
+            <div class="arrow"><i class="fa-solid fa-arrow-right" style="color:#cbd5e1; font-size:30px; margin-top:100px;"></i></div>
+            <div class="drop-slot" ondrop="dropCard(event)" ondragover="allowDrop(event)" id="slot4">
+                <div class="slot-number">4</div>
+            </div>
+            <div class="arrow"><i class="fa-solid fa-arrow-right" style="color:#cbd5e1; font-size:30px; margin-top:100px;"></i></div>
+            <div class="drop-slot" ondrop="dropCard(event)" ondragover="allowDrop(event)" id="slot5">
+                <div class="slot-number">5</div>
+            </div>
+        </div>
+
+        <!-- Draggable Cards -->
+        <div class="card-deck" id="cardDeck">
+            <!-- Cards (Will be shuffled slightly in real logic, here static for layout) -->
+            <div class="journey-card" draggable="true" ondragstart="drag(event)" id="card_truck" data-order="3">
+                <i class="fa-solid fa-truck"></i>
+                <span>Xe Chở Rác</span>
+            </div>
+            <div class="journey-card" draggable="true" ondragstart="drag(event)" id="card_bin" data-order="2">
+                <i class="fa-solid fa-trash-can"></i>
+                <span>Bỏ Thùng Rác</span>
+            </div>
+            <div class="journey-card" draggable="true" ondragstart="drag(event)" id="card_product" data-order="5">
+                <i class="fa-solid fa-shirt"></i>
+                <span>Sản Phẩm Mới</span>
+            </div>
+            <div class="journey-card" draggable="true" ondragstart="drag(event)" id="card_waste" data-order="1">
+                <i class="fa-solid fa-bottle-water"></i>
+                <span>Chai Bị Vứt</span>
+            </div>
+            <div class="journey-card" draggable="true" ondragstart="drag(event)" id="card_factory" data-order="4">
+                <i class="fa-solid fa-industry"></i>
+                <span>Nhà Máy</span>
+            </div>
+        </div>
+
+        <button class="check-btn" onclick="checkOrder()">Kiểm tra kết quả</button>
+        <div id="game2-msg" class="success-message">Chúc mừng! Quy trình hoàn toàn chính xác! 🌟</div>
+    </div>
+</div>
+
+<!-- Slide 10: Results & Connection (Scene 5) -->
+<div class="slide-container bleed-image-layout" id="slide10">
+    <div class="content-container">
+        <h2 class="slide-title">5. Kết Quả & Kết Nối</h2>
+        <p>Sản phẩm cuối cùng là những chiếc bè nổi sáng tạo, minh chứng cho việc "Biến rác thành tài nguyên".</p>
+        <p><strong>Kết nối gia đình:</strong> Khuyến khích phụ huynh cùng trẻ làm đồ chơi tái chế tại nhà và gửi ảnh qua Email/Zalo.</p>
+        <p>Lan tỏa thông điệp bảo vệ môi trường từ lớp học đến gia đình và cộng đồng.</p>
+    </div>
+    <div class="image-container">
+        <img class="bleed-image-side" src="http://googleusercontent.com/image_collection/image_retrieval/12022127274935082950" alt="Giáo viên cười tươi cầm sản phẩm bè nổi tái chế">
+    </div>
+</div>
+
+<!-- Slide 11: Tech Stack -->
+<div class="slide-container" id="slide11">
+    <h2 class="slide-title">Công Cụ & Tài Liệu Sử Dụng</h2>
+    <div class="content-area">
+        <div class="table-layout">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hạng Mục</th>
+                        <th>Chi Tiết</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Phần mềm AI</strong></td>
+                        <td>ChatGPT (Soạn kịch bản), D-ID/HeyGen (Tạo nhân vật ảo), Canva (Thiết kế).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tương tác số</strong></td>
+                        <td>PowerPoint (Trigger), Quizizz/Wordwall (Game), QR Codes.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Thiết bị</strong></td>
+                        <td>Máy tính, iPad/Máy tính bảng, Màn hình TV tương tác.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vật liệu STEAM</strong></td>
+                        <td>Chai nhựa, hộp sữa, dây thun, băng dính, giấy màu, bể nước.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 12: Conclusion Quote -->
+<div class="slide-container" id="slide12">
+    <h2 class="slide-title">Thông Điệp Của Giáo Viên</h2>
+    <div class="content-area">
+        <div class="quote-layout">
+            <blockquote>
+                "Là một Đảng viên, tôi cam kết tiên phong đổi mới, sáng tạo, góp phần xây dựng trường học số, vì một thế hệ tương lai phát triển toàn diện."
+            </blockquote>
+            <cite>- [Tên của bạn]</cite>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 13: Q&A -->
+<div class="slide-container" id="slide13">
+    <div class="qa-layout">
+        <h2>Xin Cảm Ơn!</h2>
+        <p style="font-size: 28px; margin-top: 20px;">Ban Giám Khảo đã lắng nghe</p>
+        <div style="margin-top: 50px;">
+            <i class="fa-solid fa-envelope" style="color: #0f766e; font-size: 40px; margin-bottom: 10px;"></i>
+            <p>tuoithanhxuantn@gmail.com</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // GAME LOGIC
+
+    function allowDrop(ev) {
+        ev.preventDefault();
+        // Add visual cue
+        if(ev.target.classList.contains('bin') || ev.target.classList.contains('drop-slot')) {
+            ev.target.classList.add('drag-over');
+        }
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+        ev.dataTransfer.setData("type", ev.target.getAttribute('data-type'));
+        // Remove drag-over effect from all potential targets if dragging starts
+        document.querySelectorAll('.bin, .drop-slot').forEach(el => el.classList.remove('drag-over'));
+    }
+
+    // GAME 1 LOGIC
+    let correctCountGame1 = 0;
+    const totalItemsGame1 = 6;
+
+    function drop(ev, binType) {
+        ev.preventDefault();
+        ev.target.classList.remove('drag-over');
+        
+        var data = ev.dataTransfer.getData("text");
+        var itemType = ev.dataTransfer.getData("type");
+        var draggedElement = document.getElementById(data);
+
+        // Find the closest bin element (in case dropped on icon or text inside bin)
+        var bin = ev.target.closest('.bin');
+
+        if (itemType === binType) {
+            // Visual success feedback
+            draggedElement.style.display = 'none'; // Hide from pile
+            
+            // Create a clone inside the bin for visual effect (optional, or just hide)
+            var clone = draggedElement.cloneNode(true);
+            clone.style.display = 'flex';
+            clone.style.position = 'absolute';
+            clone.style.transform = 'scale(0.5)';
+            clone.style.opacity = '0.5';
+            clone.draggable = false;
+            // Random position in bin
+            clone.style.left = Math.random() * 50 + 20 + '%'; 
+            clone.style.top = Math.random() * 50 + 40 + '%';
+            bin.appendChild(clone);
+
+            correctCountGame1++;
+            
+            // Check win condition
+            if (correctCountGame1 === totalItemsGame1) {
+                document.getElementById('game1-msg').style.opacity = '1';
+                // Play fake sound effect visually
+                bin.style.animation = "pulse 0.5s 3";
+            }
+        } else {
+            // Wrong bin feedback
+            alert("Ôi không! Cái này không thuộc thùng này rồi. Thử lại nhé!");
+        }
+    }
+
+    // GAME 2 LOGIC
+    function dropCard(ev) {
+        ev.preventDefault();
+        ev.target.classList.remove('drag-over');
+        
+        var data = ev.dataTransfer.getData("text");
+        var draggedElement = document.getElementById(data);
+        var slot = ev.target.closest('.drop-slot');
+
+        // Check if slot already has a card
+        if (slot.querySelector('.journey-card')) {
+            return; // Slot full
+        }
+
+        slot.appendChild(draggedElement);
+    }
+
+    function checkOrder() {
+        const slots = [1, 2, 3, 4, 5];
+        let isCorrect = true;
+        let filledSlots = 0;
+
+        slots.forEach(num => {
+            const slot = document.getElementById('slot' + num);
+            const card = slot.querySelector('.journey-card');
+            
+            if (card) {
+                filledSlots++;
+                if (parseInt(card.getAttribute('data-order')) !== num) {
+                    isCorrect = false;
+                    slot.style.borderColor = '#ef4444'; // Red border
+                } else {
+                    slot.style.borderColor = '#22c55e'; // Green border
+                }
+            } else {
+                isCorrect = false; // Not all slots filled
+            }
+        });
+
+        const msg = document.getElementById('game2-msg');
+        if (filledSlots < 5) {
+            msg.textContent = "Bạn chưa xếp đủ 5 bước!";
+            msg.style.color = "#eab308";
+            msg.style.opacity = '1';
+        } else if (isCorrect) {
+            msg.textContent = "Chúc mừng! Quy trình hoàn toàn chính xác! 🌟";
+            msg.style.color = "#10b981";
+            msg.style.opacity = '1';
+        } else {
+            msg.textContent = "Có bước chưa đúng, hãy thử xếp lại nhé!";
+            msg.style.color = "#ef4444";
+            msg.style.opacity = '1';
+        }
+    }
+
+    // Cleanup drag styles on dragend
+    document.addEventListener('dragend', function(event) {
+        document.querySelectorAll('.bin, .drop-slot').forEach(el => el.classList.remove('drag-over'));
+    });
+
+</script>
+
+</body>
+</html>
